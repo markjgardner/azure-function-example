@@ -1,8 +1,5 @@
 terraform {
-  backend "azurerm" {
-    container_name = "terraform"
-    key            = "function"
-  }
+  backend "azurerm" {}
 }
 
 provider "azurerm" {}
