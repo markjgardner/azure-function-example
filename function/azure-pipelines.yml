@@ -1,4 +1,4 @@
-name: example function app
+name: $(Date:yyyyMMdd)$(Rev:.r)
 
 trigger:
   branches:
