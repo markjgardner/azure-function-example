@@ -20,12 +20,8 @@ steps:
     inputs:
       solution: '**\*.sln' 
       configuration: $(BuildConfiguration)
-  - task: CopyFiles@2
-    inputs:
-      sourceFolder: $(Build.SourcesDirectory)/function/FunctionApp/bin/$(BuildConfiguration)
-      contents: '**' 
-      targetFolder:  $(Build.ArtifactStagingDirectory)
+      msbuildargs: /p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(Build.ArtifactStagingDirectory)\functionapp.zip" /p:DeployIisAppPath="Default Web Site"
   - task: PublishBuildArtifacts@1
     inputs:
-      pathtoPublish: $(Build.ArtifactStagingDirectory)
-      artifactName: functionapp 
+      pathtoPublish: $(Build.ArtifactStagingDirectory)\functionapp.zip
+      artifactName: app 
