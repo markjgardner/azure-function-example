@@ -1,0 +1,27 @@
+name: $(Date:yyyyMMdd)$(Rev:.r)
+
+trigger:
+  branches:
+    include:  
+      - master
+  paths:
+    include:
+      - function/*
+
+pool:
+  vmImage: vs2017-win2016
+
+steps:
+  - task: NuGetCommand@2
+    inputs:
+      command: restore
+      restoreSolution: '**/*.sln'
+  - task: VSBuild@1
+    inputs:
+      solution: '**\*.sln' 
+      configuration: $(BuildConfiguration)
+      msbuildargs: /p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(Build.ArtifactStagingDirectory)\functionapp.zip" /p:DeployIisAppPath="Default Web Site"
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: $(Build.ArtifactStagingDirectory)\functionapp.zip
+      artifactName: app 
