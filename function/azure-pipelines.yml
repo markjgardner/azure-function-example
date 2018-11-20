@@ -9,20 +9,23 @@ trigger:
       - function/*
 
 pool:
-  vmImage: 'vs2017-win2016'
+  vmImage: vs2017-win2016
 
 steps:
   - task: NuGetCommand@2
     inputs:
-      command: 'restore'
+      command: restore
       restoreSolution: '**/*.sln'
   - task: VSBuild@1
     inputs:
       solution: '**\*.sln' 
       configuration: $(BuildConfiguration)
-      msbuildArgs: '/p:OutDir="$(Build.ArtifactStagingDirectory)\"'
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: $(Build.SourcesDirectory)/function/FunctionApp/bin/$(BuildConfiguration)
+      contents: '**' 
+      targetFolder:  $(Build.ArtifactStagingDirectory)
   - task: PublishBuildArtifacts@1
     inputs:
-      pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
-      artifactName: 'functionapp' 
-
+      pathtoPublish: $(Build.ArtifactStagingDirectory)
+      artifactName: functionapp 
