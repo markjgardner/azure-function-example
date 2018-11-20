@@ -1,0 +1,28 @@
+name: example function app
+
+trigger:
+  branches:
+    include:  
+      - master
+  paths:
+    include:
+      - function/*
+
+pool:
+  vmImage: 'Ubuntu 16.04'
+
+steps:
+  - task: NuGetCommand@2
+    inputs:
+      command: 'restore'
+      restoreSolution: '**/*.sln'
+  - task: VSBuild@1
+    inputs:
+      solution: '**\*.sln' 
+      configuration: $(BuildConfiguration)
+      msbuildArgs: '-p:OutDir="$(Build.ArtifactStagingDirectory)\"'
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
+      artifactName: 'functionapp' 
+
