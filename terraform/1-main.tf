@@ -47,12 +47,6 @@ resource "azurerm_function_app" "fnapp" {
     APPINSIGHTS_INSTRUMENTATIONKEY = "${azurerm_application_insights.fnai.instrumentation_key}"
     AzureWebJobsServiceBus         = "${azurerm_servicebus_namespace_authorization_rule.fnsbnpolicy.primary_connection_string}"
   }
-
-  connection_string {
-    name  = "AzureWebJobsServiceBus"
-    type  = "ServiceBus"
-    value = "${azurerm_servicebus_namespace_authorization_rule.fnsbnpolicy.primary_connection_string}"
-  }
 }
 
 resource "azurerm_application_insights" "fnai" {
