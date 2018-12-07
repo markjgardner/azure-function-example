@@ -14,18 +14,26 @@
     "newsettings": { "newsetting1": "hello world" }
   },
   "resources": [
-    {
-      "apiVersion": "2018-02-01",
-      "name": "appsettings",
-      "type": "Microsoft.Web/sites/config",
-      "location": "[resourceGroup().location]",
-      "properties": "[union(list(variables('config'), '2018-02-01').properties, variables('newsettings'))]"
+    {    
+      "apiVersion": "2017-05-10",
+      "name": "nestedTemplate",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "resources": [
+            {
+              "apiVersion": "2018-02-01",
+              "name": "[concat(parameters('appName'), '/appsettings')]",
+              "type": "Microsoft.Web/sites/config",
+              "location": "[resourceGroup().location]",
+              "properties": "[union(list(variables('config'), '2018-02-01').properties, variables('newsettings'))]"
+            }
+          ]
+        }
+      }
     }
-  ],
-  "outputs": {
-    "CurrentAppSettings": {
-      "value": "[reference(appsettings)]",
-      "type" : "object"
-    }
-  }
+  ]
 }
