@@ -5,7 +5,10 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.ServiceBus" version="3.0.1" />
+<<<<<<< HEAD
     <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Storage" Version="3.0.0" />
+=======
+>>>>>>> 62ab2f2bac0a9adbd714c042be144b77f1999baf
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="1.0.23" />
   </ItemGroup>
   <ItemGroup>

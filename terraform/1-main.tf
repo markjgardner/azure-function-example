@@ -1,5 +1,12 @@
 terraform {
+<<<<<<< HEAD
   backend "azurerm" {}
+=======
+  backend "azurerm" {
+    container_name = "terraform"
+    key            = "function"
+  }
+>>>>>>> 62ab2f2bac0a9adbd714c042be144b77f1999baf
 }
 
 provider "azurerm" {}
@@ -47,6 +54,15 @@ resource "azurerm_function_app" "fnapp" {
     APPINSIGHTS_INSTRUMENTATIONKEY = "${azurerm_application_insights.fnai.instrumentation_key}"
     AzureWebJobsServiceBus         = "${azurerm_servicebus_namespace_authorization_rule.fnsbnpolicy.primary_connection_string}"
   }
+<<<<<<< HEAD
+=======
+
+  connection_string {
+    name  = "AzureWebJobsServiceBus"
+    type  = "ServiceBus"
+    value = "${azurerm_servicebus_namespace_authorization_rule.fnsbnpolicy.primary_connection_string}"
+  }
+>>>>>>> 62ab2f2bac0a9adbd714c042be144b77f1999baf
 }
 
 resource "azurerm_application_insights" "fnai" {
