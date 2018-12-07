@@ -10,14 +10,21 @@
     }
   },
   "variables": {
-    "appid" : "[resourceId('Microsoft.Web/sites/config', parameters('appName'), 'appsettings')]",
+    "config" : "[resourceId('Microsoft.Web/sites/config', parameters('appName'), 'appsettings')]",
     "newsettings": { "newsetting1": "hello world" }
   },
   "resources": [
+    {
+      "apiVersion": "2018-02-01",
+      "name": "appsettings",
+      "type": "Microsoft.Web/sites/config",
+      "location": "[resourceGroup().location]",
+      "properties": "[union(list(variables('config'), '2018-02-01').properties, variables('newsettings'))]"
+    }
   ],
   "outputs": {
-    "AppSettings": {
-      "value": "[list(variables('appid'), '2018-02-01').properties]",
+    "CurrentAppSettings": {
+      "value": "[reference(appsettings)]",
       "type" : "object"
     }
   }
