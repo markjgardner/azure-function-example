@@ -10,14 +10,14 @@
     }
   },
   "variables": {
-    "appid" : "[resourceId('Microsoft.Web/sites', parameters('appName'))]",
+    "appid" : "[resourceId('Microsoft.Web/sites/config', parameters('appName'), 'appsettings')]",
     "newsettings": { "newsetting1": "hello world" }
   },
   "resources": [
   ],
   "outputs": {
     "AppSettings": {
-      "value": "[reference(variables('appid'), '2018-02-01')]",
+      "value": "[list(variables('appid'), '2018-02-01').properties]",
       "type" : "object"
     }
   }
