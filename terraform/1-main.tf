@@ -1,12 +1,5 @@
 terraform {
-<<<<<<< HEAD
   backend "azurerm" {}
-=======
-  backend "azurerm" {
-    container_name = "terraform"
-    key            = "function"
-  }
->>>>>>> 62ab2f2bac0a9adbd714c042be144b77f1999baf
 }
 
 provider "azurerm" {}
