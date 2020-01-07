@@ -19,7 +19,7 @@ stages:
         arguments: '-c Release'
     - task: ArchiveFiles@2
       inputs:
-        rootFolderOrFile: $(Pipeline.Workspace)/bin/release/netcoreapp3.1
+        rootFolderOrFile: $(Pipeline.Workspace)/bin/release/netcoreapp2.2/
         archiveType: zip
         archiveFile: $(Pipeline.Workspace)/function.zip
     - publish: $(Pipeline.Workspace)/function.zip
