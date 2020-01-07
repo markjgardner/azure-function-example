@@ -1,8 +1,0 @@
-{
-  "IsEncrypted": false,
-  "Values": {
-    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
-    "AzureWebJobsDashboard": "UseDevelopmentStorage=true",
-    "AzureWebJobsServiceBus": "Endpoint=sb://releasr-sn.servicebus.windows.net/;SharedAccessKeyName=functionpolicy;SharedAccessKey=zcKqi4WGtf9yMwj2YcsLVaFBFomstEqwrw0g7e1bOQI="
-  }
-}

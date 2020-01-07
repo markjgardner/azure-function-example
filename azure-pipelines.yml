@@ -1,16 +1,43 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+name: $(Date:yyyyMMdd)$(Rev:.r)
 
-pool:
-  vmImage: 'Ubuntu 16.04'
+trigger:
+  branches:
+    include:  
+      - master
+      - pipeline
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+stages:
+- stage: build
+  jobs:
+  - job:
+    pool:
+      vmImage: windows-latest
+    steps:
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: publish
+        workingDirectory: function
+        projects: function.csproj
+        publishWebProjects: true
+        zipAfterPublish: true 
+    - publish: function.zip
+      artifact: app 
+- stage: deploy
+  jobs:
+  - deployment:
+    environment: dev
+    pool:
+      vmImage: windows-latest
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: AzureRmWebAppDeployment@4
+            inputs:
+              ConnectionType: 'AzureRM'
+              azureSubscription: 'mjgfndev publish profile'
+              WebAppKind: 'functionApp'
+              WebAppName: 'mjgfndev'
+              packageForLinux: '**/*.zip'
+              enableCustomDeployment: true
+              DeploymentType: 'runFromZip'  
