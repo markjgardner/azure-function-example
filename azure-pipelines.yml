@@ -18,7 +18,6 @@ stages:
         command: publish
         workingDirectory: function
         projects: function.csproj
-        publishWebProjects: true
         zipAfterPublish: true 
     - publish: function.zip
       artifact: app 
