@@ -15,11 +15,15 @@ stages:
     steps:
     - task: DotNetCoreCLI@2
       inputs:
-        command: publish
+        command: build
         workingDirectory: function
         projects: function.csproj
-        zipAfterPublish: true 
-    - publish: function.zip
+    - task: ArchiveFiles@2
+      inputs:
+        rootFolderOrFile: $(Build.BinariesDirectory)
+        archiveType: zip
+        archiveFile: $(Pipeline.Workspace)/function.zip
+    - publish: $(Pipeline.Workspace)/function.zip
       artifact: app 
 - stage: deploy
   jobs:
