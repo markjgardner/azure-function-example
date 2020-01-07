@@ -36,10 +36,10 @@ stages:
           steps:
           - task: AzureRmWebAppDeployment@4
             inputs:
-              ConnectionType: 'AzureRM'
+              ConnectionType: AzureRM
               azureSubscription: 'mjgfndev publish profile'
-              WebAppKind: 'functionApp'
-              WebAppName: 'mjgfndev'
-              packageForLinux: '**/*.zip'
+              WebAppKind: functionApp
+              WebAppName: mjgfndev
+              packageForLinux: $(Pipeline.Workspace)/app/function.zip
               enableCustomDeployment: true
-              DeploymentType: 'runFromZip'  
+              DeploymentType: runFromZip
