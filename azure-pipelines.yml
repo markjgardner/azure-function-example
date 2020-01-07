@@ -16,11 +16,11 @@ stages:
     - task: DotNetCoreCLI@2
       inputs:
         command: build
-        workingDirectory: function
-        projects: function.csproj
+        arguments: '-c Release'
+        workingDirectory: $(Pipeline.Workspace)/function
     - task: ArchiveFiles@2
       inputs:
-        rootFolderOrFile: $(Build.BinariesDirectory)
+        rootFolderOrFile: $(Pipeline.Workspace)/bin/release
         archiveType: zip
         archiveFile: $(Pipeline.Workspace)/function.zip
     - publish: $(Pipeline.Workspace)/function.zip
